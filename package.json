@@ -1,0 +1,49 @@
+{
+  "name": "edgy-api",
+  "version": "1.0.0",
+  "description": "It provides a javascript class for accessing the Edgy API from a μApp (micro App)",
+  "main": "lib/Api.js",
+  "sideEffects": false,
+  "scripts": {
+    "build": "rimraf ./lib && tsc",
+    "deploy": "cross-env NODE_ENV=production npm run build && npm publish",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iulian-radu-at/edgy-api.git"
+  },
+  "files": [
+    "lib",
+    "index.d.ts"
+  ],
+  "keywords": [
+    "Edgy",
+    "API"
+  ],
+  "author": "Iulian Radu <iulian.radu@gmx.at>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iulian-radu-at/edgy-api/issues"
+  },
+  "homepage": "https://github.com/iulian-radu-at/edgy-api#readme",
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "./node_modules",
+      "./history"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "testRegex": "src/*(/(__tests?__/)([^_].*/)*?[^_][^/]*?\\.(test|spec)?\\.(js?))$",
+    "setupFiles": [
+      "./enzymeAdapter.setup.js"
+    ]
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "jest": "^24.8.0",
+    "rimraf": "^2.6.3",
+    "typescript": "^3.5.2"
+  }
+}
