@@ -33,17 +33,17 @@
       "./history"
     ],
     "transform": {
-      "^.+\\.js$": "babel-jest"
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.ts$": "ts-jest"
     },
-    "testRegex": "src/*(/(__tests?__/)([^_].*/)*?[^_][^/]*?\\.(test|spec)?\\.(js?))$",
-    "setupFiles": [
-      "./enzymeAdapter.setup.js"
-    ]
+    "testRegex": "src/.*\\.test\\.ts$"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.15",
     "cross-env": "^5.2.0",
     "jest": "^24.8.0",
     "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.5.2"
   }
 }
