@@ -70,7 +70,7 @@ declare class Api {
   isAppLatestVersion: () => boolean;
   isPermalinkApiKey: () => boolean;
   saveAppCfg: (
-    obj: JsonEdgyObject,
+    obj: Omit<JsonEdgyObject, 'type'>,
     onSuccess?: (resp: JsonEdgyObject) => void,
     onError?: (error: Error) => void
   ) => Promise<JsonEdgyObject | Error>;
@@ -108,6 +108,8 @@ export interface FindObjectsFilter {
 }
 
 export type METHOD = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
 declare module 'edgy-api' {}
 

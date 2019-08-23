@@ -307,7 +307,7 @@ class Api {
   }
 
   public saveAppCfg(
-    obj: JsonEdgyObject,
+    obj: Omit<JsonEdgyObject, 'type'>,
     onSuccess?: (resp: JsonEdgyObject) => void,
     onError?: (error: Error) => void
   ): Promise<JsonEdgyObject | Error> {
@@ -503,6 +503,8 @@ interface WindowApi {
 }
 
 export type METHOD = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
 export type Mock = {
   AllAccounts: Partial<JsonAccount>[];

@@ -486,3 +486,7 @@ await new API().updateObject({ name: 'App Re-branded' })
 ### 1.1.0
 
 - Added a function for saving an APP-CFG
+
+### 1.1.1
+
+- saveAppCfg to do not ask for the type to be present in object
