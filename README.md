@@ -143,7 +143,7 @@ It returns info about all defined acccounts
 | name      | type                  | required                        | description                                          |
 |-----------|-----------------------|---------------------------------|------------------------------------------------------|
 | filter    | string[]              | no                              | returns only these fields from object (default name) |
-| onSuccess | (resp: string[]\|Partial<JsonAccount>[]) => void | no|callback function                                 |
+| onSuccess | (resp: string[] \| Partial<JsonAccount>[]) => void | no|callback function                                 |
 | onError   | (resp: Error) => void | no                              | callback function                                    |
 
 The following fields in filter are mapped:
@@ -345,13 +345,13 @@ getObject
 
 It returns an object
 
-| name      | type                    | required                  | description                                        |
-|-----------|-------------------------|---------------------------|----------------------------------------------------|
-| id        | string                  | yes                       | the id of the object                               |
-| version   | number\|*                         | no|the number of a version or '*' for all versions |
-| fields    | string[]                | no                        | a list of required fields or all fields            |
-| onSuccess | (resp: JsonEdgyObject\|JsonEdgyObject[]) => void | no|callback function                               |
-| onError   | (resp: Error) => void   | no                        | callback function                                  |
+| name      | type                   | required                  | description                                        |
+|-----------|------------------------|---------------------------|----------------------------------------------------|
+| id        | string                 | yes                       | the id of the object                               |
+| version   | number \| *                         | no|the number of a version or '*' for all versions |
+| fields    | string[]               | no                        | a list of required fields or all fields            |
+| onSuccess | (resp: JsonEdgyObject \| JsonEdgyObject[]) => void | no|callback function                               |
+| onError   | (resp: Error) => void  | no                        | callback function                                  |
 
 ```js
 const mockField = 'AnObject'
@@ -399,6 +399,24 @@ It returns true if the current api key represents a permalink
 const mockField = 'ApiKey'
 const mockFieldValue = '$id.17xysz4gvnrlm.20200529175809'
 new API().isPermalinkApiKey()
+```
+
+saveAppCfg
+----------
+
+It creates a new object of type APP-CFG owned by the current APP
+
+| name      | type                           | required | description       |
+|-----------|--------------------------------|----------|-------------------|
+| obj       | JsonEdgyObject                 | yes      | the new object    |
+| onSuccess | (resp: JsonEdgyObject) => void | no       | callback function |
+| onError   | (resp: Error) => void          | no       | callback function |
+
+The type will be APP-CFG and the owner.id will be the id of current APP.
+
+```js
+const mockField = undefined
+await new API().saveAppCfg({ name: 'New App-Cfg', data: {} })
 ```
 
 saveMyself
@@ -464,3 +482,7 @@ await new API().updateObject({ name: 'App Re-branded' })
 ### 1.0.0
 
 - The initial release of Edgy API for μApp
+
+### 1.1.0
+
+- Added a function for saving an APP-CFG

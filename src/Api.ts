@@ -306,6 +306,24 @@ class Api {
     return this.getApiKey().charAt(0) === '$';
   }
 
+  public saveAppCfg(
+    obj: JsonEdgyObject,
+    onSuccess?: (resp: JsonEdgyObject) => void,
+    onError?: (error: Error) => void
+  ): Promise<JsonEdgyObject | Error> {
+    return this.saveObject(
+      {
+        ...obj,
+        type: 'APP-CFG',
+        owner: {
+          id: this.getAppId()
+        }
+      },
+      onSuccess,
+      onError
+    );
+  }
+
   public saveMyself(
     obj: Partial<JsonEdgyObject>,
     onSuccess?: (resp: JsonEdgyObject) => void,

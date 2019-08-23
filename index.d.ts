@@ -69,6 +69,11 @@ declare class Api {
   isAppCfg: () => boolean;
   isAppLatestVersion: () => boolean;
   isPermalinkApiKey: () => boolean;
+  saveAppCfg: (
+    obj: JsonEdgyObject,
+    onSuccess?: (resp: JsonEdgyObject) => void,
+    onError?: (error: Error) => void
+  ) => Promise<JsonEdgyObject | Error>;
   saveMyself: (
     obj: Partial<JsonEdgyObject>,
     onSuccess?: (resp: JsonEdgyObject) => void,
