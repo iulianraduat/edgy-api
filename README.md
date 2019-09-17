@@ -513,3 +513,7 @@ new API().getApi()
 ### 1.1.2
 
 - Exposed the protected functions
+
+### 1.1.3
+
+- Add an id to saved object if none is provided

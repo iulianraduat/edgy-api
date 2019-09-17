@@ -361,6 +361,14 @@ class Api {
       return this.getApi()!.saveObject(obj, onSuccess, onError);
     }
 
+    if (obj.id === undefined) {
+      obj = {
+        ...obj,
+        id: Math.random()
+          .toString(36)
+          .substr(2, 9)
+      };
+    }
     this.mock.FindObjects = [...this.mock.FindObjects, obj];
 
     onSuccess && onSuccess(obj);
