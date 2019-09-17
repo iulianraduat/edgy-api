@@ -89,7 +89,7 @@ class Api {
     postMessage?: string
   ): Promise<unknown> {
     if (this.isPresent()) {
-      return this.getApi().callApi(method, endpointAndArgs, obj, onSuccess, onError, postMessage);
+      return this.getApi()!.callApi(method, endpointAndArgs, obj, onSuccess, onError, postMessage);
     }
 
     const mockResponse = this.mock[`${method}_${endpointAndArgs}`] || obj;
@@ -106,7 +106,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<JsonEdgyObject | Error> {
     if (this.isPresent()) {
-      return this.getApi().deleteObject(id, onSuccess, onError);
+      return this.getApi()!.deleteObject(id, onSuccess, onError);
     }
 
     onSuccess && onSuccess(this.mock.AnObject);
@@ -122,7 +122,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<JsonEdgyObject[] | Error> {
     if (this.isPresent()) {
-      return this.getApi().findObjects(filter, fields, onSuccess, onError);
+      return this.getApi()!.findObjects(filter, fields, onSuccess, onError);
     }
 
     onSuccess && onSuccess(this.mock.FindObjects);
@@ -138,7 +138,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<string[] | Partial<JsonAccount>[] | Error> {
     if (this.isPresent()) {
-      return this.getApi().getAllAccounts(filter, onSuccess, onError);
+      return this.getApi()!.getAllAccounts(filter, onSuccess, onError);
     }
 
     onSuccess && onSuccess(this.mock.AllAccounts);
@@ -152,7 +152,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<JsonAppInfo[] | Error> {
     if (this.isPresent()) {
-      return this.getApi().getAllAppInfos(onSuccess, onError);
+      return this.getApi()!.getAllAppInfos(onSuccess, onError);
     }
 
     onSuccess && onSuccess(this.mock.AllAppInfos);
@@ -166,7 +166,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<string[] | Error> {
     if (this.isPresent()) {
-      return this.getApi().getAllDefinedColors(onSuccess, onError);
+      return this.getApi()!.getAllDefinedColors(onSuccess, onError);
     }
 
     onSuccess && onSuccess(this.mock.AllDefinedColors);
@@ -180,7 +180,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<string[] | Error> {
     if (this.isPresent()) {
-      return this.getApi().getAllDefinedRoles(onSuccess, onError);
+      return this.getApi()!.getAllDefinedRoles(onSuccess, onError);
     }
 
     onSuccess && onSuccess(this.mock.AllDefinedRoles);
@@ -194,7 +194,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<string[] | Error> {
     if (this.isPresent()) {
-      return this.getApi().getAllDefinedTags(onSuccess, onError);
+      return this.getApi()!.getAllDefinedTags(onSuccess, onError);
     }
 
     onSuccess && onSuccess(this.mock.AllDefinedTags);
@@ -209,7 +209,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<JsonObjectVersion[] | Error> {
     if (this.isPresent()) {
-      return this.getApi().getAllObjectVersions(id, onSuccess, onError);
+      return this.getApi()!.getAllObjectVersions(id, onSuccess, onError);
     }
 
     onSuccess && onSuccess(this.mock.AllObjectVersions);
@@ -219,20 +219,20 @@ class Api {
   }
 
   public getApiKey(): string {
-    return this.isPresent() ? this.getApi().getApiKey() : this.mock.ApiKey;
+    return this.isPresent() ? this.getApi()!.getApiKey() : this.mock.ApiKey;
   }
 
   public getAppCfg(): { [key: string]: unknown } | undefined {
-    return this.isPresent() ? this.getApi().getAppCfg() : this.mock.AppCfg;
+    return this.isPresent() ? this.getApi()!.getAppCfg() : this.mock.AppCfg;
   }
 
   public getAppId(): string {
-    return this.isPresent() ? this.getApi().getAppId() : this.mock.AppId;
+    return this.isPresent() ? this.getApi()!.getAppId() : this.mock.AppId;
   }
 
   public getAppSection(): string | undefined {
     if (this.isPresent()) {
-      return this.getApi().getAppSection();
+      return this.getApi()!.getAppSection();
     }
 
     const urlPath = window.location.pathname.substr(1);
@@ -240,15 +240,15 @@ class Api {
   }
 
   public getAppType(): IsApp {
-    return this.isPresent() ? this.getApi().getAppType() : this.mock.AppType;
+    return this.isPresent() ? this.getApi()!.getAppType() : this.mock.AppType;
   }
 
   public getAppVersion(): number {
-    return this.isPresent() ? this.getApi().getAppVersion() : this.mock.AppVersion;
+    return this.isPresent() ? this.getApi()!.getAppVersion() : this.mock.AppVersion;
   }
 
   public getBaseUrl(): string {
-    return this.isPresent() ? this.getApi().getBaseUrl() : this.mock.BaseUrl;
+    return this.isPresent() ? this.getApi()!.getBaseUrl() : this.mock.BaseUrl;
   }
 
   public getMyself(
@@ -257,7 +257,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<JsonEdgyObject | Error> {
     if (this.isPresent()) {
-      return this.getApi().getMyself(fields, onSuccess, onError);
+      return this.getApi()!.getMyself(fields, onSuccess, onError);
     }
 
     onSuccess && onSuccess(this.mock.AppObject);
@@ -274,7 +274,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<JsonEdgyObject | JsonEdgyObject[] | Error> {
     if (this.isPresent()) {
-      return this.getApi().getObject(id, version, fields, onSuccess, onError);
+      return this.getApi()!.getObject(id, version, fields, onSuccess, onError);
     }
 
     if (version !== '*') {
@@ -291,7 +291,7 @@ class Api {
   }
 
   public getMySignature(): string {
-    return this.isPresent() ? this.getApi().getMySignature() : this.mock.MySignature;
+    return this.isPresent() ? this.getApi()!.getMySignature() : this.mock.MySignature;
   }
 
   public isAppCfg(): boolean {
@@ -299,7 +299,7 @@ class Api {
   }
 
   public isAppLatestVersion(): boolean {
-    return this.isPresent() ? this.getApi().isAppLatestVersion() : this.mock.AppObject.version!.latest === true;
+    return this.isPresent() ? this.getApi()!.isAppLatestVersion() : this.mock.AppObject.version!.latest === true;
   }
 
   public isPermalinkApiKey(): boolean {
@@ -330,7 +330,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<JsonEdgyObject | Error> {
     if (this.isPresent()) {
-      return this.getApi().saveMyself(obj, onSuccess, onError);
+      return this.getApi()!.saveMyself(obj, onSuccess, onError);
     }
 
     const mockResponse = { ...this.mock.AppObject, ...obj };
@@ -358,7 +358,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<JsonEdgyObject | Error> {
     if (this.isPresent()) {
-      return this.getApi().saveObject(obj, onSuccess, onError);
+      return this.getApi()!.saveObject(obj, onSuccess, onError);
     }
 
     this.mock.FindObjects = [...this.mock.FindObjects, obj];
@@ -375,7 +375,7 @@ class Api {
     onError?: (error: Error) => void
   ): Promise<JsonEdgyObject | Error> {
     if (this.isPresent()) {
-      return this.getApi().updateObject(obj, onSuccess, onError);
+      return this.getApi()!.updateObject(obj, onSuccess, onError);
     }
 
     const fullObj: JsonEdgyObject = { ...this.mock.AnObject, ...obj };
@@ -392,7 +392,7 @@ class Api {
     return !!this.getApi();
   }
 
-  protected getApi(): WindowApi {
+  protected getApi(): WindowApi | undefined {
     return (window as any).__api;
   }
 }

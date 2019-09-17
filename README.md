@@ -345,13 +345,13 @@ getObject
 
 It returns an object
 
-| name      | type                   | required                  | description                                        |
-|-----------|------------------------|---------------------------|----------------------------------------------------|
-| id        | string                 | yes                       | the id of the object                               |
+| name      | type                    | required                  | description                                        |
+|-----------|-------------------------|---------------------------|----------------------------------------------------|
+| id        | string                  | yes                       | the id of the object                               |
 | version   | number \| *                         | no|the number of a version or '*' for all versions |
-| fields    | string[]               | no                        | a list of required fields or all fields            |
+| fields    | string[]                | no                        | a list of required fields or all fields            |
 | onSuccess | (resp: JsonEdgyObject \| JsonEdgyObject[]) => void | no|callback function                               |
-| onError   | (resp: Error) => void  | no                        | callback function                                  |
+| onError   | (resp: Error) => void   | no                        | callback function                                  |
 
 ```js
 const mockField = 'AnObject'
@@ -467,6 +467,25 @@ const mockField = 'AnObject'
 await new API().updateObject({ name: 'App Re-branded' })
 ```
 
+isPresent (protected)
+------------
+
+It returns true is the App is runned inside of Edgy platform
+
+```js
+new API().isPresent()
+```
+
+getApi  (protected)
+------------
+
+It returns the Api provided by Edgy platform or undefined
+
+```js
+const mockField = 'AnObject'
+new API().getApi()
+```
+
 ---
 
 ## About the versioning schema used for Edgy Api
@@ -490,3 +509,7 @@ await new API().updateObject({ name: 'App Re-branded' })
 ### 1.1.1
 
 - saveAppCfg to do not ask for the type to be present in object
+
+### 1.1.2
+
+- Exposed the protected functions
