@@ -132,6 +132,10 @@ class Api {
     });
   }
 
+  public getAccountId(): string {
+    return this.isPresent() ? this.getApi()!.getAccountId() : this.mock.AccountId;
+  }
+
   public getAllAccounts(
     filter?: string[],
     onSuccess?: (resp: string[] | Partial<JsonAccount>[]) => void,
@@ -445,6 +449,7 @@ interface WindowApi {
     onSuccess?: (objs: JsonEdgyObject[]) => void,
     onError?: (error: Error) => void
   ) => Promise<JsonEdgyObject[] | Error>;
+  getAccountId: () => string;
   getAllAccounts: (
     filter?: string[],
     onSuccess?: (resp: string[] | Partial<JsonAccount>[]) => void,
@@ -515,6 +520,7 @@ export type METHOD = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
 export type Mock = {
+  AccountId: string;
   AllAccounts: Partial<JsonAccount>[];
   AllAppInfos: JsonAppInfo[];
   AllDefinedColors: string[];

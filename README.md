@@ -22,6 +22,7 @@ The required fields of a mock object:
 
 | name                 | type                   |
 |----------------------|------------------------|
+| AccountId            | string                 |
 | AllAccounts          | Partial<JsonAccount>[] |
 | AllAppInfos          | JsonAppInfo[]          |
 | AllDefinedColors     | string[]               |
@@ -133,6 +134,16 @@ Search for objects respecting a set of criterions
 ```js
 const mockField = 'FindObjects'
 await new API().findObjects('to=ACCOUNT', ['name', 'data.roles'])
+```
+
+getAccountId
+-------------------
+
+It returns the id of account associtaed to current API key
+
+```js
+const mockField = 'AccountId'
+new API().getAccountId()
 ```
 
 getAllAccounts
@@ -517,3 +528,7 @@ new API().getApi()
 ### 1.1.3
 
 - Add an id to saved object if none is provided
+
+### 1.1.4
+
+- Add a function to return the id of the account corresponding to the current API key

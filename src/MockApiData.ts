@@ -7,6 +7,8 @@ import {
   Mock
   } from './Api';
 
+const AccountId: string = '1';
+
 const AllAccounts: Partial<JsonAccount>[] = [
   {
     data: {
@@ -271,6 +273,7 @@ const FindObjects: JsonEdgyObject[] = [
 const MySignature: string = 'Test API <api@edgy.ferbinder.com>';
 
 const mock: Mock = {
+  AccountId,
   AllAccounts,
   AllAppInfos,
   AllDefinedColors,

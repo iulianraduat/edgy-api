@@ -20,6 +20,7 @@ declare class Api {
     onSuccess?: (objs: JsonEdgyObject[]) => void,
     onError?: (error: Error) => void
   ) => Promise<JsonEdgyObject[] | Error>;
+  public getAccountId: () => string;
   public getAllAccounts: (
     filter?: string[],
     onSuccess?: (resp: string[] | Partial<JsonAccount>[]) => void,
