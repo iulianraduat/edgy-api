@@ -89,7 +89,14 @@ class Api {
     postMessage?: string
   ): Promise<unknown> {
     if (this.isPresent()) {
-      return this.getApi()!.callApi(method, endpointAndArgs, obj, onSuccess, onError, postMessage);
+      return this.getApi()!.callApi(
+        method,
+        endpointAndArgs,
+        obj,
+        onSuccess,
+        onError,
+        postMessage
+      );
     }
 
     const mockResponse = this.mock[`${method}_${endpointAndArgs}`] || obj;
@@ -109,9 +116,12 @@ class Api {
       return this.getApi()!.deleteObject(id, onSuccess, onError);
     }
 
-    onSuccess && onSuccess(this.mock.AnObject);
+    const obj = this.getMockObject(id);
+    delete this.mock.Objects[id];
+
+    onSuccess && onSuccess(obj);
     return new Promise<JsonEdgyObject>(resolve => {
-      resolve(this.mock.AnObject);
+      resolve(obj);
     });
   }
 
@@ -133,7 +143,9 @@ class Api {
   }
 
   public getAccountId(): string {
-    return this.isPresent() ? this.getApi()!.getAccountId() : this.mock.AccountId;
+    return this.isPresent()
+      ? this.getApi()!.getAccountId()
+      : this.mock.AccountId;
   }
 
   public getAllAccounts(
@@ -248,7 +260,9 @@ class Api {
   }
 
   public getAppVersion(): number {
-    return this.isPresent() ? this.getApi()!.getAppVersion() : this.mock.AppVersion;
+    return this.isPresent()
+      ? this.getApi()!.getAppVersion()
+      : this.mock.AppVersion;
   }
 
   public getBaseUrl(): string {
@@ -282,9 +296,11 @@ class Api {
     }
 
     if (version !== '*') {
-      onSuccess && onSuccess(this.mock.AnObject);
+      const obj = this.getMockObject(id);
+      
+      onSuccess && onSuccess(obj);
       return new Promise<JsonEdgyObject>(resolve => {
-        resolve(this.mock.AppObject);
+        resolve(obj);
       });
     }
 
@@ -295,7 +311,9 @@ class Api {
   }
 
   public getMySignature(): string {
-    return this.isPresent() ? this.getApi()!.getMySignature() : this.mock.MySignature;
+    return this.isPresent()
+      ? this.getApi()!.getMySignature()
+      : this.mock.MySignature;
   }
 
   public isAppCfg(): boolean {
@@ -303,7 +321,9 @@ class Api {
   }
 
   public isAppLatestVersion(): boolean {
-    return this.isPresent() ? this.getApi()!.isAppLatestVersion() : this.mock.AppObject.version!.latest === true;
+    return this.isPresent()
+      ? this.getApi()!.isAppLatestVersion()
+      : this.mock.AppObject.version!.latest === true;
   }
 
   public isPermalinkApiKey(): boolean {
@@ -342,13 +362,20 @@ class Api {
 
     mockResponse.version = {
       ...mockResponse.version,
-      changelog: obj.version ? obj.version.changelog : mockResponse.version!.changelog,
+      changelog: obj.version
+        ? obj.version.changelog
+        : mockResponse.version!.changelog,
       number: (mockResponse.version!.number as number) + 1,
       latest: true
     };
 
-    this.mock.AppObjectAllVersions[this.mock.AppObjectAllVersions.length - 1].version!.latest = false;
-    this.mock.AppObjectAllVersions = [...this.mock.AppObjectAllVersions, mockResponse];
+    this.mock.AppObjectAllVersions[
+      this.mock.AppObjectAllVersions.length - 1
+    ].version!.latest = false;
+    this.mock.AppObjectAllVersions = [
+      ...this.mock.AppObjectAllVersions,
+      mockResponse
+    ];
 
     onSuccess && onSuccess(mockResponse);
     return new Promise<JsonEdgyObject>(resolve => {
@@ -390,9 +417,13 @@ class Api {
       return this.getApi()!.updateObject(obj, onSuccess, onError);
     }
 
-    const fullObj: JsonEdgyObject = { ...this.mock.AnObject, ...obj };
+    const fullObj: JsonEdgyObject = { ...this.getMockObject(obj.id || ''), ...obj };
     fullObj.version!.deleted = fullObj.version!.created;
     this.mock.FindObjects = [...this.mock.FindObjects, fullObj];
+
+    if(obj.id){
+      this.mock.Objects[obj.id] = fullObj;
+    }
 
     onSuccess && onSuccess(fullObj);
     return new Promise<JsonEdgyObject>(function(resolve) {
@@ -406,6 +437,14 @@ class Api {
 
   protected getApi(): WindowApi | undefined {
     return (window as any).__api;
+  }
+
+  private getMockObject(id: string): JsonEdgyObject {
+    if (this.mock.Objects[id]) {
+      return this.mock.Objects[id];
+    }
+
+    return this.mock.AnObject;
   }
 }
 
@@ -539,6 +578,7 @@ export type Mock = {
   BaseUrl: string;
   FindObjects: JsonEdgyObject[];
   MySignature: string;
+  Objects: { [id: string]: JsonEdgyObject };
   [key: string]: unknown;
 };
 

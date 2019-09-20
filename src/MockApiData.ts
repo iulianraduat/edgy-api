@@ -5,7 +5,7 @@ import {
   JsonEdgyObject,
   JsonObjectVersion,
   Mock
-  } from './Api';
+} from './Api';
 
 const AccountId: string = '1';
 
@@ -272,6 +272,10 @@ const FindObjects: JsonEdgyObject[] = [
 
 const MySignature: string = 'Test API <api@edgy.ferbinder.com>';
 
+const Objects: { [id: string]: JsonEdgyObject } = {
+  '7x': AnObject
+};
+
 const mock: Mock = {
   AccountId,
   AllAccounts,
@@ -291,7 +295,8 @@ const mock: Mock = {
   AppVersion,
   BaseUrl,
   FindObjects,
-  MySignature
+  MySignature,
+  Objects
 };
 
 export default mock;

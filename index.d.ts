@@ -1,95 +1,95 @@
 declare class Api {
   constructor(mock?: Partial<Mock>);
-  public buildFindObjectsFilter: (findObjectsFilter: FindObjectsFilter) => string;
-  public callApi: (
+  public buildFindObjectsFilter(findObjectsFilter: FindObjectsFilter): string;
+  public callApi(
     method: METHOD,
     endpointAndArgs: string,
     obj?: unknown,
     onSuccess?: (resp: unknown) => void,
     onError?: (resp: Error) => void,
     postMessage?: string
-  ) => Promise<unknown>;
-  public deleteObject: (
+  ): Promise<unknown>;
+  public deleteObject(
     id: string,
     onSuccess?: (resp: JsonEdgyObject) => void,
     onError?: (error: Error) => void
-  ) => Promise<JsonEdgyObject | Error>;
-  public findObjects: (
+  ): Promise<JsonEdgyObject | Error>;
+  public findObjects(
     filter: string,
     fields?: string[],
     onSuccess?: (objs: JsonEdgyObject[]) => void,
     onError?: (error: Error) => void
-  ) => Promise<JsonEdgyObject[] | Error>;
-  public getAccountId: () => string;
-  public getAllAccounts: (
+  ): Promise<JsonEdgyObject[] | Error>;
+  public getAccountId(): string;
+  public getAllAccounts(
     filter?: string[],
     onSuccess?: (resp: string[] | Partial<JsonAccount>[]) => void,
     onError?: (error: Error) => void
-  ) => Promise<string[] | Partial<JsonAccount>[] | Error>;
-  public getAllAppInfos: (
+  ): Promise<string[] | Partial<JsonAccount>[] | Error>;
+  public getAllAppInfos(
     onSuccess?: (resp: JsonAppInfo[]) => void,
     onError?: (error: Error) => void
-  ) => Promise<JsonAppInfo[] | Error>;
-  public getAllDefinedColors: (
+  ): Promise<JsonAppInfo[] | Error>;
+  public getAllDefinedColors(
     onSuccess?: (resp: string[]) => void,
     onError?: (error: Error) => void
-  ) => Promise<string[] | Error>;
-  public getAllDefinedRoles: (
+  ): Promise<string[] | Error>;
+  public getAllDefinedRoles(
     onSuccess?: (resp: string[]) => void,
     onError?: (error: Error) => void
-  ) => Promise<string[] | Error>;
-  public getAllDefinedTags: (
+  ): Promise<string[] | Error>;
+  public getAllDefinedTags(
     onSuccess?: (resp: string[]) => void,
     onError?: (error: Error) => void
-  ) => Promise<string[] | Error>;
-  public getAllObjectVersions: (
+  ): Promise<string[] | Error>;
+  public getAllObjectVersions(
     id: string,
     onSuccess?: (resp: JsonObjectVersion[]) => void,
     onError?: (error: Error) => void
-  ) => Promise<JsonObjectVersion[] | Error>;
-  public getApiKey: () => string;
-  public getAppCfg: () => { [key: string]: unknown } | undefined;
-  public getAppId: () => string;
-  public getAppSection: () => string | undefined;
-  public getAppType: () => IsApp;
-  public getAppVersion: () => number | undefined;
-  public getBaseUrl: () => string;
-  public getMyself: (
+  ): Promise<JsonObjectVersion[] | Error>;
+  public getApiKey(): string;
+  public getAppCfg(): { [key: string]: unknown } | undefined;
+  public getAppId(): string;
+  public getAppSection(): string | undefined;
+  public getAppType(): IsApp;
+  public getAppVersion(): number | undefined;
+  public getBaseUrl(): string;
+  public getMyself(
     fields?: string[],
     onSuccess?: (resp: JsonEdgyObject) => void,
     onError?: (error: Error) => void
-  ) => Promise<JsonEdgyObject | Error>;
-  public getObject: (
+  ): Promise<JsonEdgyObject | Error>;
+  public getObject(
     id: string,
     version?: number | '*',
     fields?: string[],
     onSuccess?: (resp: JsonEdgyObject | JsonEdgyObject[]) => void,
     onError?: (error: Error) => void
-  ) => Promise<JsonEdgyObject | JsonEdgyObject[] | Error>;
-  public getMySignature: () => string;
-  public isAppCfg: () => boolean;
-  public isAppLatestVersion: () => boolean;
-  public isPermalinkApiKey: () => boolean;
-  public saveAppCfg: (
+  ): Promise<JsonEdgyObject | JsonEdgyObject[] | Error>;
+  public getMySignature(): string;
+  public isAppCfg(): boolean;
+  public isAppLatestVersion(): boolean;
+  public isPermalinkApiKey(): boolean;
+  public saveAppCfg(
     obj: Omit<JsonEdgyObject, 'type'>,
     onSuccess?: (resp: JsonEdgyObject) => void,
     onError?: (error: Error) => void
-  ) => Promise<JsonEdgyObject | Error>;
-  public saveMyself: (
+  ): Promise<JsonEdgyObject | Error>;
+  public saveMyself(
     obj: Partial<JsonEdgyObject>,
     onSuccess?: (resp: JsonEdgyObject) => void,
     onError?: (error: Error) => void
-  ) => Promise<JsonEdgyObject | Error>;
-  public saveObject: (
+  ): Promise<JsonEdgyObject | Error>;
+  public saveObject(
     obj: JsonEdgyObject,
     onSuccess?: (resp: JsonEdgyObject) => void,
     onError?: (error: Error) => void
-  ) => Promise<JsonEdgyObject | Error>;
-  public updateObject: (
+  ): Promise<JsonEdgyObject | Error>;
+  public updateObject(
     obj: Partial<JsonEdgyObject>,
     onSuccess?: (resp: JsonEdgyObject) => void,
     onError?: (error: Error) => void
-  ) => Promise<JsonEdgyObject | Error>;
+  ): Promise<JsonEdgyObject | Error>;
   protected isPresent(): boolean;
   protected getApi(): WindowApi;
 }
@@ -136,6 +136,7 @@ export type Mock = {
   AppVersion: number;
   BaseUrl: string;
   FindObjects: JsonEdgyObject[];
+  Objects: { [id: string]: JsonEdgyObject };
   [key: string]: unknown;
 };
 
@@ -253,13 +254,13 @@ interface WindowApi {
     onSuccess?: (resp: JsonObjectVersion[]) => void,
     onError?: (error: Error) => void
   ) => Promise<JsonObjectVersion[] | Error>;
-  getApiKey: () => string;
-  getAppCfg: () => { [key: string]: unknown } | undefined;
-  getAppId: () => string;
-  getAppSection: () => string | undefined;
-  getAppType: () => IsApp;
-  getAppVersion: () => number;
-  getBaseUrl: () => string;
+  getApiKey(): string;
+  getAppCfg(): { [key: string]: unknown } | undefined;
+  getAppId(): string;
+  getAppSection(): string | undefined;
+  getAppType(): IsApp;
+  getAppVersion(): number;
+  getBaseUrl(): string;
   getMyself: (
     fields?: string[],
     onSuccess?: (resp: JsonEdgyObject) => void,
@@ -272,9 +273,9 @@ interface WindowApi {
     onSuccess?: (resp: JsonEdgyObject | JsonEdgyObject[]) => void,
     onError?: (error: Error) => void
   ) => Promise<JsonEdgyObject | JsonEdgyObject[] | Error>;
-  getMySignature: () => string;
-  isAppLatestVersion: () => boolean;
-  isPermalinkApiKey: () => boolean;
+  getMySignature(): string;
+  isAppLatestVersion(): boolean;
+  isPermalinkApiKey(): boolean;
   saveMyself: (
     obj: Partial<JsonEdgyObject>,
     onSuccess?: (resp: JsonEdgyObject) => void,

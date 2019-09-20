@@ -20,25 +20,27 @@ Using a custom mock data
 
 The required fields of a mock object:
 
-| name                 | type                   |
-|----------------------|------------------------|
-| AccountId            | string                 |
-| AllAccounts          | Partial<JsonAccount>[] |
-| AllAppInfos          | JsonAppInfo[]          |
-| AllDefinedColors     | string[]               |
-| AllDefinedRoles      | string[]               |
-| AllDefinedTags       | string[]               |
-| AllObjectVersions    | JsonObjectVersion[]    |
-| AnObject             | JsonEdgyObject         |
-| ApiKey               | string                 |
-| AppCfg               | object                 |
-| AppId                | string                 |
-| AppObject            | JsonEdgyObject         |
-| AppObjectAllVersions | JsonEdgyObject[]       |
-| AppType              | IsApp                  |
-| AppVersion           | number                 |
-| BaseUrl              | string                 |
-| FindObjects          | JsonEdgyObject[]       |
+| name                 | type                             |
+|----------------------|----------------------------------|
+| AccountId            | string                           |
+| AllAccounts          | Partial<JsonAccount>[]           |
+| AllAppInfos          | JsonAppInfo[]                    |
+| AllDefinedColors     | string[]                         |
+| AllDefinedRoles      | string[]                         |
+| AllDefinedTags       | string[]                         |
+| AllObjectVersions    | JsonObjectVersion[]              |
+| AnObject             | JsonEdgyObject                   |
+| ApiKey               | string                           |
+| AppCfg               | object                           |
+| AppId                | string                           |
+| AppObject            | JsonEdgyObject                   |
+| AppObjectAllVersions | JsonEdgyObject[]                 |
+| AppType              | IsApp                            |
+| AppVersion           | number                           |
+| BaseUrl              | string                           |
+| FindObjects          | JsonEdgyObject[]                 |
+| Objects              | { [id: string]: JsonEdgyObject } |
+
 
 ```js
 const mockField = 'AppId'
@@ -116,8 +118,11 @@ It removes an object
 
 ```js
 const mockField = 'AnObject'
+const mockMultipleObjects = 'Objects'
 await new API().deleteObject('appId')
 ```
+
+Note: if the provided id exists as key in Objects, then that entry will be deleted.
 
 findObjects
 -----------
@@ -367,8 +372,11 @@ It returns an object
 ```js
 const mockField = 'AnObject'
 const mockFieldAllVersions = 'AnObjectAllVersions'
+const mockMultipleObjects = 'Objects'
 await new API().getObject('appId')
 ```
+
+Note: getObject search the provided id in Objects, which is a map of JsonEdgyObjects by id. If it is not found then returns AnObject.
 
 getMySignature
 --------------
@@ -475,8 +483,11 @@ It creates a new version of an object. The id of the object is took from obj.id
 
 ```js
 const mockField = 'AnObject'
+const mockMultipleObjects = 'Objects'
 await new API().updateObject({ name: 'App Re-branded' })
 ```
+
+Note: if provided object contains an id and the id is present in Objects, then this is updated, otherwise AnObject.
 
 isPresent (protected)
 ------------
@@ -532,3 +543,9 @@ new API().getApi()
 ### 1.1.4
 
 - Add a function to return the id of the account corresponding to the current API key
+
+### 1.2.0
+
+- getObject is able to return different objects based on provided id
+- updateObject can update an object from a list of objects, if an id is provided
+- deleteObject can remove an object from a list of objects
