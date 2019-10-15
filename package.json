@@ -1,6 +1,6 @@
 {
   "name": "edgy-api",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "It provides a javascript class for accessing the Edgy API from a μApp (micro App)",
   "main": "lib/Api.js",
   "sideEffects": false,
@@ -39,11 +39,11 @@
     "testRegex": "src/.*\\.test\\.ts$"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.18",
-    "cross-env": "^6.0.0",
+    "@types/jest": "^24.0.19",
+    "cross-env": "^6.0.3",
     "jest": "^24.9.0",
     "rimraf": "^3.0.0",
     "ts-jest": "^24.1.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.4"
   }
 }

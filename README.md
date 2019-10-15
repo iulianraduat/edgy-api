@@ -510,6 +510,107 @@ new API().getApi()
 
 ---
 
+## The structure of an event (typescript)
+
+```js
+type JsonEdgyObjectId = number;
+
+interface Event {
+  alarms?: JsonEdgyObjectId[];
+  attachments?: JsonEdgyObjectId[];
+  attendees?: JsonEdgyObjectId[];
+  categories?: string[];
+  comments?: string[];
+  description?: string;
+  /* the duration of the event or one of its recurring events in seconds */
+  duration: number;
+  /* when end the event or when end the valability of the recurring events (conform to ISO 8601 notation: yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm) */
+  end: string;
+  /* it represents excluded dates (correspond to the start of the recurring events) (conform to ISO 8601 notation: yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm) */
+  exDates?: string[];
+  exEvents?: JsonEdgyObjectId[];
+  exRules?: EventRule[];
+  geo?: { latitude: number; longitude: number } | { minLatitude: number; maxLatitude: number; minLongitude: number; maxLongitude: number };
+  location?: string;
+  organizer: JsonEdgyObjectId[];
+  priority?: 'HIGH'
+    | 'MEDIUM' /* default */
+    | 'LOW';
+  resources?: JsonEdgyObjectId[];
+  /* conform to ISO 8601 notation: yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm */
+  rDates?: string[];
+  /* event objects whos events are included in this event */
+  rEvents?: JsonEdgyObjectId[];
+  /* the relation between them is OR */
+  rRules?: EventRule[];
+  /* when start the event or when start the valability of these recurring events (conform to ISO 8601 notation: yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm) */
+  start: string;
+  status?: 'TENTATIVE'
+    | 'CONFIRMED'
+    | 'CANCELLED'
+    | 'NEEDS-ACTION'
+    | 'IN-PROCESS'  /* in progress */
+    | 'COMPLETED'
+    | 'DRAFT';
+  summary: string;
+  transp?: 'OPAQUE' /* time is marked as busy */
+    | 'TRANSPARENT';/* time is marked as free */
+  [xProp: string]: any;
+}
+
+interface EventRule {
+  count?: number;
+  /* the relation between fields is AND and between the values in a field is OR */
+  match: {
+    seconds?: number[];
+    minutes?: number[];
+    hours?: number[];
+    days?: number[];
+    months?: number[];
+    years?: number[];
+    weeksOfYear?: number[];
+    daysOfWeek?: number[];
+    daysOfYear?: number[];
+  };
+  /* conform to ISO 8601 notation: yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm */
+  until?: string;
+}
+```
+
+```js
+type UserObjectId = number;
+
+interface JsonEventAttendeeObject {
+  attendee: UserObjectId;
+  /* a list of delegators from the latest to first */
+  delegatedFrom?: UserObjectId[];
+  partStat: 'NEEDS-ACTION'  /* did not answered */
+    |'ACCEPTED'
+    | 'DECLINED'
+    | 'TENTATIVE';
+  role: 'CHAIR'             /* organizer */
+    | 'REQ-PARTICIPANT'     /* required */
+    | 'OPT-PARTICIPANT'     /* optional */
+    | 'NON-PARTICIPANT';
+  rsvp: boolean;
+}
+```
+
+```js
+type SoundObjectId = number;
+
+interface JsonEventAlarmObject {
+  action: 'AUDIO'   /* play the sound referenced in sound */
+    | 'DISPLAY'     /* a message/popup in UI */
+    | 'EMAIL';
+  message?: string;
+  /* the offset in seconds relative to start or end of the event */
+  offset: number;
+  relativeTo: 'START' | 'END';
+  sound?: SoundObjectId;
+}
+```
+
 ## About the versioning schema used for Edgy Api
 
 - Major - it will be increased if there are breaking changes in the code of Api.js
@@ -549,3 +650,7 @@ new API().getApi()
 - getObject is able to return different objects based on provided id
 - updateObject can update an object from a list of objects, if an id is provided
 - deleteObject can remove an object from a list of objects
+
+### 1.3.0
+
+- Added in index.d.ts a definition for an event
